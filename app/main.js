@@ -11,7 +11,9 @@ rl.on('line', (command) => {
     rl.close();
     return;
   }
-  else {
+  else if (command === "echo") {
+    console.log(`${rl.input}`);
+  } else {
     console.log(`${command}: command not found`);
   }
   rl.prompt();
