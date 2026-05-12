@@ -7,7 +7,13 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (command) => {
-  console.log(`${command}: command not found`);
+  if (command === "exit") {
+    rl.close();
+    return;
+  }
+  else {
+    console.log(`${command}: command not found`);
+  }
   rl.prompt();
 });
 
