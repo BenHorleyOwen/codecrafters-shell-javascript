@@ -12,6 +12,7 @@ const builtin = {
   echo: (command) => {
     let args = command.slice(5).trim().split(/\s+/);
     console.log(args.join(" "));
+    rl.prompt();
   },
 
   type: (command) => {
@@ -30,10 +31,12 @@ const builtin = {
     else {
       console.log(`${args[0]}: not found`);
     }
+    rl.prompt();
   },
 
   exit: () => {
-    rl.continue = false;
+    rl.close();
+    exit(0);
   }
 }
 
@@ -43,9 +46,6 @@ rl.on('line', (command) => {
     builtin[instruction](command);
   } else { // unrecognised command
     console.log(`${command}: command not found`);
-  }
-  if (rl.continue){
-    rl.prompt();
   }
 });
 
