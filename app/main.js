@@ -11,10 +11,10 @@ rl.on('line', (command) => {
     rl.close();
     return;
   }
-  else if (command === "echo") {
-    console.log(`${rl.input}`);
+  else if (command[0] === "echo") {
+    console.log(`${rl.input[1:-1]}`);
   } else {
-    console.log(`${command}: command not found`);
+    console.log(`${command[0]}: command not found`);
   }
   rl.prompt();
 });
