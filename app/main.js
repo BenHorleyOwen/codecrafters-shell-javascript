@@ -12,7 +12,6 @@ const builtin = {
   echo: (command) => {
     let args = command.slice(5).trim().split(/\s+/);
     console.log(args.join(" "));
-    rl.prompt();
   },
 
   type: (command) => {
@@ -31,7 +30,6 @@ const builtin = {
     else {
       console.log(`${args[0]}: not found`);
     }
-    rl.prompt();
   },
 
   exit: () => {
@@ -47,6 +45,7 @@ rl.on('line', (command) => {
   } else { // unrecognised command
     console.log(`${command}: command not found`);
   }
+  rl.prompt();
 });
 
 rl.prompt();
