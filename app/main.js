@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require('fs');
 const { exit } = require("process");
 const readline = require("readline");
+const child_process = require('child_process');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -56,7 +57,19 @@ rl.on('line', (command) => {
   instruction = command.split(" ")[0];
   if (instruction in builtin) { //call shell builtins
     builtin[instruction](command);
-  } else { // unrecognised command
+  } 
+  else if (PATH.some(dir => fs.existsSync(path.join(dir, instruction)))) {
+      potentialCommands = PATH.map(dir => path.join(dir, instruction)).filter(file => fs.existsSync(file)); 
+      potentialCommands.forEach(dir => {
+        try {
+          fs.accessSync(dir, fs.constants.X_OK);
+          child_process.spawnSync(dir, command.split(" ").slice(1), { stdio: 'inherit', argv0: instruction });
+        } catch (err) {
+          // do nothing, the file is not executable
+        }
+      });
+    }
+  else { // unrecognised command
     console.log(`${command}: command not found`);
   }
   rl.prompt();
