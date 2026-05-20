@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require('fs');
 const { exit } = require("process");
 const readline = require("readline");
 
@@ -5,9 +7,9 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   prompt: "$ ",
-  continue: true,
 });
 
+const PATH = process.env.PATH.split(path.delimiter);
 const builtin = {
   echo: (command) => {
     let args = command.slice(5).trim().split(/\s+/);
@@ -26,7 +28,19 @@ const builtin = {
     }
     else if (args[0] in builtin) { // if the command is in builtin, give proper console log
       console.log(`${args[0]} is a shell builtin`);
-    } 
+    }
+    else if (PATH.some(dir => fs.existsSync(path.join(dir, args[0])))) { // check if the command exists in PATH
+      //create an array of each instance of the command in PATH and check if it is executable, then print the path
+      potentialCommands = PATH.map(dir => path.join(dir, args[0])).filter(file => fs.existsSync(file)); // the map joins the command to the directory
+      potentialCommands.forEach(dir => {
+        try {
+          fs.accessSync(dir, fs.constants.X_OK);
+          console.log(`${args[0]} is ` + dir);
+        } catch (err) {
+          // do nothing, the file is not executable
+        }
+      });
+    }
     else {
       console.log(`${args[0]}: not found`);
     }
