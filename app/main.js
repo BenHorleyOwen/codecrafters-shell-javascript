@@ -3,6 +3,7 @@ const fs = require('fs');
 const { exit } = require("process");
 const readline = require("readline");
 const child_process = require('child_process');
+const cwd = require("process");
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -37,16 +38,16 @@ const builtin = {
         try {
           fs.accessSync(dir, fs.constants.X_OK);
           console.log(`${args[0]} is ` + dir);
-        } catch (err) {
-          // do nothing, the file is not executable
-        }
+        } catch (err) {}
       });
     }
     else {
       console.log(`${args[0]}: not found`);
     }
   },
-
+  pwd: () => {
+    console.log(process.cwd());
+  },
   exit: () => {
     rl.close();
     exit(0);
@@ -64,9 +65,7 @@ rl.on('line', (command) => {
         try {
           fs.accessSync(dir, fs.constants.X_OK);
           child_process.spawnSync(dir, command.split(" ").slice(1), { stdio: 'inherit', argv0: instruction });
-        } catch (err) {
-          // do nothing, the file is not executable
-        }
+        } catch (err) {}
       });
     }
   else { // unrecognised command
