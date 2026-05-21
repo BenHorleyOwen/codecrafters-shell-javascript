@@ -48,6 +48,17 @@ const builtin = {
   pwd: () => {
     console.log(process.cwd());
   },
+  cd: (command) => {
+    let args = command.slice(3).trim().split(/\s+/); //splits on whitespace, should only be one arguement
+    try {
+      if (args[0].startsWith("/")) //absolute path delineated by first character
+        process.chdir(args[0]);
+      else
+        process.chdir(path.join(process.cwd(), args[0]));
+    } catch (err) {
+      console.log(`cd: ${args[0]}: No such file or directory`);
+    }
+  },
   exit: () => {
     rl.close();
     exit(0);
