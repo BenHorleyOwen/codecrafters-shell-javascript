@@ -1,34 +1,23 @@
-[![progress-banner](https://backend.codecrafters.io/progress/shell/227426d9-7dd3-44b6-99f5-dff748464999)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+In this challenge, I built a POSIX compliant shell that's capable of interpreting shell commands (running both external programs and builtin commands). 
 
-This is a starting point for JavaScript solutions to the
-["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
+I also documented my engineering decisions to help with evaluating my own skillset and areas for improvement
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
-interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
+head over to [codecrafters.io](https://codecrafters.io) to try the challenge.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
-
-# Passing the first stage
-
-The entry point for your `shell` implementation is in `app/main.js`. Study and
-uncomment the relevant code, then run the command below to execute the tests on
-our servers:
-
-```sh
-codecrafters submit
-```
-
-Time to move on to the next stage!
-
-# Stage 2 & beyond
-
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `node (25)` installed locally
-1. Run `./your_program.sh` to run your program, which is implemented in
-   `app/main.js`.
-1. Run `codecrafters submit` to submit your solution to CodeCrafters. Test
-   output will be streamed to your terminal.
+# Results
+- Built a POSIX-inspired shell in JavaScript using Node.js and the readline module
+- Implemented a REPL (Read–Eval–Print Loop) architecture for interactive shell execution
+- Developed builtin shell commands including exit, echo, type, pwd, and cd
+- Implemented Unix-style PATH resolution for locating executable programs
+- Used child_process.spawnSync to execute external programs with inherited stdio streams
+- Managed process arguments and executable invocation using argv0 and command parsing
+- Implemented relative, absolute, and home-directory (~) path navigation
+- Worked with environment variables including PATH and HOME
+- Applied filesystem and executable permission checks using Node.js filesystem APIs
+- Explored process management and synchronous execution behavior in a shell environment
+- Refactored command handling logic from conditional chains toward dictionary/hashmap-based lookup
+- Evaluated performance tradeoffs between PATH preprocessing and runtime executable lookup
+- Debugged shell behavior, command parsing issues, and terminal environment configuration
+- Used VSCode and terminal tooling for Linux-style CLI development workflows
+- Applied Unix/Linux shell concepts including working directories, executables, and command dispatching
+- Investigated shell implementation details such as recursive prompting and event-driven input handling
